@@ -1,0 +1,20 @@
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+pytest-asyncio>=0.21.0
+pytest-xdist>=3.3.0  # For parallel test execution
+
+# HTTP testing
+httpx>=0.24.0
+requests-mock>=1.11.0
+
+# FastAPI testing
+FastAPI>=0.115.12
+starlette>=0.27.0
+
+# Async testing
+aioresponses>=0.7.0
+
+# Additional testing utilities
+factory-boy>=3.3.0  # For test data generation
+faker>=19.3.0       # For fake data generation

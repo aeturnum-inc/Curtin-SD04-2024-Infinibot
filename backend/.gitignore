@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual Environments
+.venv/
+env/
+.env
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Build artifacts
+dist/
+
+# Logs
+log.txt
+
+# macOS
+.DS_Store

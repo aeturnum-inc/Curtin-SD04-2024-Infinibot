@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "20.15.1",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.9.1"
+    },
+    "version": "1.17.4",
+    "libraryName": "spfx-chatbot",
+    "libraryId": "a4fddc15-0511-4365-b01d-feaa2ad1ed22",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "spfx-chatbot",
+    "solutionShortDescription": "spfx-chatbot description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}
