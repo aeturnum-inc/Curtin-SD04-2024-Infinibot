@@ -71,9 +71,11 @@ export const ChatMessage: React.FC<IChatMessageProps> = ({
           {docSources.map((doc, index) => (
             <a
               key={index}
-              href={doc.webUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.open(doc.webUrl, '_blank', 'noopener,noreferrer');
+              }}
               className={styles.docSourceButton}
               title={`View document: ${doc.source}`}
             >
