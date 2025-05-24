@@ -1,10 +1,3 @@
-import * as React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import axios from 'axios';
-import Infinibot from './Infinibot';
-import { IInfinibotProps } from './IInfinibotProps';
-import '@testing-library/jest-dom';
-
 // Mock child components to avoid dependency issues
 jest.mock('./ChatMessage', () => ({
   ChatMessage: ({
@@ -56,10 +49,6 @@ jest.mock('./WelcomeMessage', () => ({
 
 // Mock axios
 jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-// Mock the scrollIntoView function which is not implemented in jsdom
-Element.prototype.scrollIntoView = jest.fn();
 
 // Mock CSS module
 jest.mock('./Infinibot.module.scss', () => ({
@@ -96,6 +85,18 @@ jest.mock('../config/env', () => ({
   API_ROOT_URL: 'http://test-root'
 }));
 
+import * as React from 'react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import axios from 'axios';
+import Infinibot from './Infinibot';
+import { IInfinibotProps } from './IInfinibotProps';
+import '@testing-library/jest-dom';
+
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+// Mock the scrollIntoView function which is not implemented in jsdom
+Element.prototype.scrollIntoView = jest.fn();
+
 // Setup mock response data
 const mockResponseData = {
   response: 'This is a test response from the bot.\n## Sources Used\nDoc1, Doc2',
@@ -115,7 +116,7 @@ const mockProps: IInfinibotProps = {
         loginName: 'testuser'
       }
     }
-  } as any,
+  } as unknown as IInfinibotProps['context'],
   userDisplayName: 'Test User',
   description: '',
   environmentMessage: '',
@@ -306,29 +307,29 @@ describe('Infinibot Component', () => {
   });
 
   test('handles API errors gracefully', async () => {
-  // Silence the expected error log for clean test output
-  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    // Silence the expected error log for clean test output
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
-  mockedAxios.post.mockRejectedValueOnce(new Error('API Error'));
+    mockedAxios.post.mockRejectedValueOnce(new Error('API Error'));
 
-  const { unmount } = render(<Infinibot {...mockProps} />);
-  fireEvent.click(screen.getByAltText('Chat Icon'));
-  fireEvent.click(screen.getByTestId('send-button'));
+    const { unmount } = render(<Infinibot {...mockProps} />);
+    fireEvent.click(screen.getByAltText('Chat Icon'));
+    fireEvent.click(screen.getByTestId('send-button'));
 
-  act(() => {
-    jest.advanceTimersByTime(1000);
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    await waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalled();
+    });
+
+    const messages = document.querySelectorAll('[data-testid="mock-chat-message"]');
+    expect(messages.length).toBeGreaterThanOrEqual(1);
+
+    unmount();
+    errorSpy.mockRestore();
   });
-
-  await waitFor(() => {
-    expect(mockedAxios.post).toHaveBeenCalled();
-  });
-
-  const messages = document.querySelectorAll('[data-testid="mock-chat-message"]');
-  expect(messages.length).toBeGreaterThanOrEqual(1);
-
-  unmount();
-  errorSpy.mockRestore();
-});
 
   test('checks backend connection on mount', () => {
     render(<Infinibot {...mockProps} />);
