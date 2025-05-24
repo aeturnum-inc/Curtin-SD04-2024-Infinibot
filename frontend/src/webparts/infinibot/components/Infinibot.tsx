@@ -201,7 +201,7 @@ export default class Infinibot extends React.Component<IInfinibotProps, IInfinib
       if (!this.state.currentConversationId) {
         // Use Axios with the proper headers
         response =         response = await axios.post(
-          `${API_BASE_URL}/chat`,
+          `${API_BASE_URL}/chat/`,
           {
             message,
           },

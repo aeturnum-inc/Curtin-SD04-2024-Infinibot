@@ -34,4 +34,4 @@ obj
 *.scss.ts
 
 # Environment files
-.env
+src/webparts/infinibot/config/env.ts
