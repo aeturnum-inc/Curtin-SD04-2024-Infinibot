@@ -1,8 +1,3 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { WelcomeMessage } from './WelcomeMessage';
-
 // Mock the styles
 jest.mock('./Infinibot.module.scss', () => ({
   welcomeContainer: 'mock-welcomeContainer',
@@ -15,6 +10,11 @@ jest.mock('./Infinibot.module.scss', () => ({
 
 // Mock the image import
 jest.mock('../assets/botIcon.png', () => 'mock-bot-icon.png');
+
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { WelcomeMessage } from './WelcomeMessage';
 
 describe('WelcomeMessage Component', () => {
   // Basic Rendering Tests
